@@ -1,69 +1,122 @@
 package sample;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
+import sample.Coordinate;
+import sample.Displayer;
+import sample.GameFlow;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.HPos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Control;
+import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+/**
+ *
+ * @author leah
+ *  class depicting a board controller
+ */
 public class BoardController extends GridPane implements Displayer {
-    private ArrayList<ArrayList<Character>> board;
-    private static final int FREE = 0;
-    private static final int WALL = 1;
-    private Player player;
 
-    public BoardController(ArrayList<ArrayList<Character>> board) {
-        this.board = board;
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MazeBoard.fxml"));
+    private static final char BLACK = 'X';
+    private static final int WHITE = 'O';
+
+    /**
+     * constructor
+     */
+    public BoardController() {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
-
         try {
             fxmlLoader.load();
-            this.setOnKeyPressed(event -> {
-                switch (event.getCode()) {
-                    case DOWN:
-                        player.moveDown();
-                        break;
-                    case UP:
-                        player.moveUp();
-                        break;
-                    case LEFT:
-                        player.moveLeft();
-                        break;
-                    case RIGHT:
-                        player.moveRight();
-                        break;
-                }
-                event.consume();
-            });
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        player = new Player(this, 0, 0);
     }
+
     @Override
-    public void display(ArrayList<ArrayList<Character>> board) {
+    public void draw(Color p1Color, Color p2Color, ArrayList<ArrayList<Character>> board) {
+
         this.getChildren().clear();
+        int height = (int) this.getPrefHeight();
+        int width = (int) this.getPrefWidth();
+        int radius;
+        int cellHeight = height / board.size();
+        int cellWidth = width / board.size();
+        if (cellWidth > cellHeight) {
+            radius = cellHeight / 3;
+        } else {
+            radius = cellWidth / 3;
+        }
 
-        int height = (int)this.getPrefHeight();
-        int width = (int)this.getPrefWidth();
-
-        int cellHeight = height / board.length;
-        int cellWidth = width / board[0].length;
-
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++) {
-                if (board[i][j] == FREE)
-                    this.add(new Rectangle(cellWidth, cellHeight,
-                            Color.WHITE), j, i);
-                else
-                    this.add(new Rectangle(cellWidth, cellHeight,
-                            Color.BLACK), j, i);
+        // draw grid
+        for (int i = 0; i < board.size(); i++) {
+            for (int j = 0; j < board.get(i).size(); j++) {
+                Rectangle back = new Rectangle(cellWidth, cellHeight, Color.BLUEVIOLET);
+                back.setStroke(Color.BLACK);
+                this.add(back, j, i);
             }
         }
-        player.draw(cellWidth, cellHeight);
+
+        // draw player tokens on grid
+        for (int i = 0; i < board.size(); i++) {
+            for (int j = 0; j < board.get(i).size(); j++) {
+                if (board.get(i).get(j) == BLACK) {
+                    Circle black = new Circle(3, 3, radius, p1Color);
+                    black.setCenterX(i + (width / 2));
+                    black.setCenterY(j + (height / 2));
+                    GridPane.setHalignment(black, HPos.CENTER);
+                    this.add(black, j, i);
+                } else if (board.get(i).get(j) == WHITE) {
+                    Circle white = new Circle(3, 3, radius, p2Color);
+                    white.setCenterX(i + (width / 2));
+                    white.setCenterY(j + (height / 2));
+                    GridPane.setHalignment(white, HPos.CENTER);
+                    this.add(white, j, i);
+                }
+            }
+        }
+    }
+
+    /**
+     * add buttons on grid for player to select possible (valid) move
+     * @param buttonId a list of possible move coordinate, to be button location on game board
+     * @param board game board
+     * @param gf game flow, in order to update the game flow on which move was made and to continue the game accordingly
+     */
+    public void drawPossibleMovesButtons(ArrayList<String> buttonId, ArrayList<ArrayList<Character>> board, GameFlow gf) {
+        int height = (int) this.getPrefHeight();
+        int width = (int) this.getPrefWidth();
+        int cellHeight = height / board.size();
+        int cellWidth = width / board.size();
+        //for every location (given as string) make a button placed accordingly on board. its location will be its id
+        for (String bid: buttonId) {
+            Button move = new Button();
+            move.setStyle("-fx-background-color: #0abbb3");
+            move.setPrefHeight(cellHeight);
+            move.setPrefWidth(cellWidth);
+            move.setId(bid);
+            char [] coord = bid.toCharArray();
+            int xCoord = Character.getNumericValue(coord[0]);
+            int yCoord = Character.getNumericValue(coord[1]);
+            this.add(move, yCoord, xCoord);
+            move.setOnMousePressed(event -> {
+                //when button is pressed, interpret location by the buttons id, and send location to game flow
+                String s = ((Control)event.getSource()).getId();
+                char [] chosenCell = s.toCharArray();
+                int chosenCellxCoord = Character.getNumericValue(chosenCell[0]);
+                int chosenCellyCoord = Character.getNumericValue(chosenCell[1]);
+                Coordinate c = new Coordinate(chosenCellxCoord, chosenCellyCoord);
+                gf.setChosen(c);
+                gf.setCurrent(chosenCell[2]);
+                gf.play();
+            });
+        }
     }
 }
+

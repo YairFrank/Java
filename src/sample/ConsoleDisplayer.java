@@ -1,12 +1,15 @@
 package sample;
+
 import java.util.ArrayList;
+
+import javafx.scene.paint.Color;
 
 public class ConsoleDisplayer implements Displayer{
 
     public ConsoleDisplayer(){}
 
     @Override
-    public void display(ArrayList<ArrayList<Character>> board) {
+    public void draw(Color p1Color, Color p2Color, ArrayList<ArrayList<Character>> board) {
         int k = 1;
         int l = 0, i = 0;
         System.out.print(" |");
@@ -38,3 +41,4 @@ public class ConsoleDisplayer implements Displayer{
 
 
 }
+

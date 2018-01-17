@@ -1,10 +1,22 @@
 package sample;
-import java.util.ArrayList;
 
+import java.util.ArrayList;
+/**
+ *
+ * @author leah
+ * class handles the game rules and logic
+ *
+ */
 public class GameLogic {
 
     public GameLogic() {}
 
+    /**
+     * gets possible (valid) moves for some player
+     * @param sign player's sign
+     * @param board the game board
+     * @return a list with possible coordinates player may select to be his move
+     */
     public ArrayList<Coordinate> getValidMoves(char sign, ArrayList<ArrayList<Character>> board) {
         ArrayList<Coordinate> v = new ArrayList<Coordinate>();
         int x, y, z = 0,xStart,yStart;
@@ -12,7 +24,6 @@ public class GameLogic {
         Coordinate  move = new Coordinate(0, 0);
         Coordinate  temp = new Coordinate(0, 0);
         ArrayList<Coordinate> playerPos, directions;
-        //ArrayList<Coordinate>::iterator i,i2,i3;
 
         //get vector of player positions on the board.
         playerPos = this.getPlayersCoords(sign, board);
@@ -20,7 +31,7 @@ public class GameLogic {
         directions = this.getDirections();
         //for every piece of that player on the board
         for (Coordinate coord : playerPos) {
-            //original coordinate of player-occiupied slot.
+            //original coordinate of player-occupied slot.
             xStart = coord.x;
             yStart = coord.y;
             x = xStart;
@@ -74,6 +85,12 @@ public class GameLogic {
         return v;
     }
 
+    /**
+     * get current location of all players tokens on the board
+     * @param s player sign
+     * @param board game board
+     * @return location of all players tokens on the board
+     */
     private ArrayList<Coordinate> getPlayersCoords(char s, ArrayList<ArrayList<Character>> board) {
         ArrayList<Coordinate> vec = new ArrayList<Coordinate>();
         Coordinate c = new Coordinate(0,0);
@@ -91,6 +108,14 @@ public class GameLogic {
         return vec;
     }
 
+    /**
+     * flips the all opponents tokens after player made his move
+     * @param s player sign
+     * @param x last move x coordinate
+     * @param y last move y coordinate
+     * @param board game board
+     * @return list of coordinate holding tokens that need to be flipped
+     */
     public ArrayList<Coordinate> flipTokens(char s, int x, int y, ArrayList<ArrayList<Character>>board) {
         int outOfBounds = board.size() - 1;
         int xStart, yStart,z = 0;
@@ -180,6 +205,12 @@ public class GameLogic {
         return directions;
     }
 
+    /**
+     * ensures no duplicate coordinates on a list
+     * @param v list of coordinates
+     * @param c certain coordinate
+     * @return true if coordinate already is on the list, false otherwise
+     */
     private boolean checkForDuplicates(ArrayList<Coordinate> v, Coordinate c) {
         for (Coordinate temp : v) {
             if ((c.x == temp.x) && (c.y == temp.y)) {
@@ -190,7 +221,11 @@ public class GameLogic {
     }
 
 
-
+    /**
+     * @param sign player sign
+     * @param board game board
+     * @return true if player has possible valid moves to make, false otherwise
+     */
     public boolean hasValidMoves(char sign, ArrayList<ArrayList<Character>> board) {
         ArrayList<Coordinate> v = this.getValidMoves(sign,board);
         //check if there are no moves available, check syntax
@@ -200,4 +235,20 @@ public class GameLogic {
         }
         return true;
     }
+
+    /**
+     * checks if game is over
+     * @param board game board.
+     * @param p1 fist player sign
+     * @param p2second player sign
+     * @return true if either player has moves and board has free space, false otherwise.
+     */
+    public boolean gameOver(Board board, char p1, char p2) {
+        ArrayList<ArrayList<Character>> b = board.getBoard();
+        if (!board.hasFreeSpaces() || ((!this.hasValidMoves(p1, b)) && (!this.hasValidMoves(p2, b)))) {
+            return true;
+        }
+        return false;
+    }
 }
+

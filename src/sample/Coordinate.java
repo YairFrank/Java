@@ -1,5 +1,11 @@
 package sample;
-class Coordinate {
+
+/**
+ * @author leah
+ * this class depicts a coordinate on game board.
+ *
+ */
+public class Coordinate {
     public int x;    // x-coordinate
     public int y;    // y-coordinate
 
@@ -15,9 +21,15 @@ class Coordinate {
         System.out.print("(" + x + "," + y + ")");
     }
 
+    /**
+     * set coordinate values
+     * @param x x coord
+     * @param y y coord
+     */
     public void setXY(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
 }
+

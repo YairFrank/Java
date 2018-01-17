@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
-
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
-<HBox xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="sample.ReversieGameController" fx:id="root" spacing="10">
-    <VBox spacing="10">
-        <Button>Start Game</Button>
-        <Button>End Game</Button>
-    </VBox>
-</HBox>
+
+<HBox fx:id="root" prefHeight="183.0" prefWidth="181.0" spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ReversiGameController" />

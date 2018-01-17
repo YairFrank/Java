@@ -1,5 +1,5 @@
 .root {
-    -fx-background-image: url("background.png")
+    -fx-background-image: url("images.jpg")
 }
 .label {
     -fx-font-size: 12px;
@@ -9,9 +9,4 @@
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-background-color: linear-gradient(#61a2b1, #2A5058);
-}
-#welcomeText {
-    -fx-font-size: 32px;
-    -fx-font-family: Arial;
-    -fx-fill: rgb(85,87,83);
 }

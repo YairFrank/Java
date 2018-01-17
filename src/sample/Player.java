@@ -1,76 +1,85 @@
 package sample;
-import java.util.ArrayList;
-import java.util.Scanner;
 
+import java.util.ArrayList;
+
+import javafx.scene.paint.Color;
+
+/**
+ *
+ * @author leah
+ *  this class depicts a player
+ */
 public class Player {
-    private char sign;
+    private Character sign;
     private boolean hasMoves;
     private ArrayList<Coordinate> moves;
-    int boardSize;
+    private Color color;
 
+    /**
+     * default constructor
+     */
     public Player() {
         this.sign = 'X';
         this.hasMoves = true;
+        this.color = Color.BLACK;
         this.moves = new ArrayList<Coordinate>();
-        this.boardSize = 8;
     }
 
-    public Player(char x, int size) {
+    /**
+     * constructor
+     * @param x player sign
+     * @param c player color
+     */
+    public Player(char x, Color c) {
         this.sign = x;
+        this.color = c;
         this.hasMoves = true;
         this.moves = new ArrayList<Coordinate>();
-        this.boardSize = size;
     }
 
+    /**
+     * @return true if player has valid moves to make, false otherwise
+     */
     public boolean hasOptions() {
         return hasMoves;
     }
 
-    public Coordinate playTurn() {
-        int x,y;
-        char c;
-
-        System.out.println("Please enter your move row <space> column:");
-
-        while(true) {
-            Scanner sc=new Scanner(System.in);
-            while(!sc.hasNextInt()){
-                System.out.println("please enter a number");
-                sc=new Scanner(System.in);
-                if(sc.hasNextInt()) {
-                    break;
-                }
-            }
-            x = sc.nextInt();
-            while(!sc.hasNextInt()){
-                System.out.println("please enter a number");
-                sc=new Scanner(System.in);
-                if(sc.hasNextInt()) {
-                    break;
-                }
-            }
-            y = sc.nextInt();
-            if (x < 1 || x >  8 || y < 1 || y > 8) {
-                System.out.println("coordinates out of bounds. please submit your move again");
-                continue;
-            }
-            break;
-        }
-        return new Coordinate(x,y);
-    }
+    /**
+     * sets member according to data
+     * @param x boolean- wether player has valid moves or not
+     */
     public void setHasMoves(boolean x) {
         this.hasMoves = x;
     }
 
+    /**
+     * @return if player has valid moves or not
+     */
     public boolean getHasMoves() {
         return this.hasMoves;
     }
 
-    public ArrayList<Coordinate> getMoves() {
-        return this.moves;
-    }
 
+    /**
+     * @return players sign
+     */
     public char getSign() {
         return this.sign;
     }
+
+    /**
+     * @return players color
+     */
+    public Color getColor() {
+        return this.color;
+    }
+
+    /**
+     * sets players color
+     * @param c color to assign to player
+     */
+    public void setColor(Color c) {
+        this.color = c;
+    }
 }
+
