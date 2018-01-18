@@ -1,4 +1,4 @@
-package sample;
+package logic;
 
 import java.util.ArrayList;
 
@@ -9,7 +9,7 @@ public class ConsoleDisplayer implements Displayer{
     public ConsoleDisplayer(){}
 
     @Override
-    public void draw(Color p1Color, Color p2Color, ArrayList<ArrayList<Character>> board) {
+    public void draw(char first, Color p1Color, Color p2Color, ArrayList<ArrayList<Character>> board) {
         int k = 1;
         int l = 0, i = 0;
         System.out.print(" |");

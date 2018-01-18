@@ -1,11 +1,11 @@
-package sample;
+package javaFX;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import sample.Coordinate;
-import sample.Displayer;
-import sample.GameFlow;
+import logic.Coordinate;
+import logic.Displayer;
+import logic.GameFlow;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
 import javafx.scene.control.Button;
@@ -21,8 +21,6 @@ import javafx.scene.shape.Rectangle;
  */
 public class BoardController extends GridPane implements Displayer {
 
-    private static final char BLACK = 'X';
-    private static final int WHITE = 'O';
 
     /**
      * constructor
@@ -40,8 +38,13 @@ public class BoardController extends GridPane implements Displayer {
     }
 
     @Override
-    public void draw(Color p1Color, Color p2Color, ArrayList<ArrayList<Character>> board) {
-
+    public void draw(char first, Color p1Color, Color p2Color, ArrayList<ArrayList<Character>> board) {
+        char second;
+        if(first=='X'){
+            second='O';
+        }else{
+            second='X';
+        }
         this.getChildren().clear();
         int height = (int) this.getPrefHeight();
         int width = (int) this.getPrefWidth();
@@ -66,13 +69,13 @@ public class BoardController extends GridPane implements Displayer {
         // draw player tokens on grid
         for (int i = 0; i < board.size(); i++) {
             for (int j = 0; j < board.get(i).size(); j++) {
-                if (board.get(i).get(j) == BLACK) {
+                if (board.get(i).get(j) == first) {
                     Circle black = new Circle(3, 3, radius, p1Color);
                     black.setCenterX(i + (width / 2));
                     black.setCenterY(j + (height / 2));
                     GridPane.setHalignment(black, HPos.CENTER);
                     this.add(black, j, i);
-                } else if (board.get(i).get(j) == WHITE) {
+                } else if (board.get(i).get(j) == second) {
                     Circle white = new Circle(3, 3, radius, p2Color);
                     white.setCenterX(i + (width / 2));
                     white.setCenterY(j + (height / 2));
@@ -96,11 +99,13 @@ public class BoardController extends GridPane implements Displayer {
         int cellWidth = width / board.size();
         //for every location (given as string) make a button placed accordingly on board. its location will be its id
         for (String bid: buttonId) {
+
             Button move = new Button();
             move.setStyle("-fx-background-color: #0abbb3");
             move.setPrefHeight(cellHeight);
             move.setPrefWidth(cellWidth);
             move.setId(bid);
+            //System.out.println(bid);
             char [] coord = bid.toCharArray();
             int xCoord = Character.getNumericValue(coord[0]);
             int yCoord = Character.getNumericValue(coord[1]);
@@ -113,7 +118,9 @@ public class BoardController extends GridPane implements Displayer {
                 int chosenCellyCoord = Character.getNumericValue(chosenCell[1]);
                 Coordinate c = new Coordinate(chosenCellxCoord, chosenCellyCoord);
                 gf.setChosen(c);
-                gf.setCurrent(chosenCell[2]);
+                System.out.println("chosen : ");
+                c.printString();
+                System.out.println("current board: " + chosenCell[2]);
                 gf.play();
             });
         }

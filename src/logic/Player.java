@@ -1,4 +1,4 @@
-package sample;
+package logic;
 
 import java.util.ArrayList;
 

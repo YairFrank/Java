@@ -1,4 +1,4 @@
-package sample;
+package logic;
 
 import java.util.ArrayList;
 /**
@@ -20,7 +20,7 @@ public class GameLogic {
     public ArrayList<Coordinate> getValidMoves(char sign, ArrayList<ArrayList<Character>> board) {
         ArrayList<Coordinate> v = new ArrayList<Coordinate>();
         int x, y, z = 0,xStart,yStart;
-        int outOfBounds = board.size() - 1;
+        int outOfBounds = board.size();
         Coordinate  move = new Coordinate(0, 0);
         Coordinate  temp = new Coordinate(0, 0);
         ArrayList<Coordinate> playerPos, directions;
@@ -57,7 +57,7 @@ public class GameLogic {
                             break;
                         } else {
                             //reached empty slot after passing opponent-occupied spaces. Potentially valid move.
-                            move.setXY(x + 1, y + 1);
+                            move.setXY(x, y);
                             //add the slot, while avoiding duplicates.
                             if (!this.checkForDuplicates(v,move)) {
                                 v.add(move);
@@ -100,7 +100,10 @@ public class GameLogic {
                 if (board.get(i).get(j) == s) {
                     c.x = i;
                     c.y = j;
-                    vec.add(c);
+                    if (!this.checkForDuplicates(vec, c)) {
+                        vec.add(c);
+                    }
+
                     c = new Coordinate(0,0);
                 }
             }
@@ -117,7 +120,7 @@ public class GameLogic {
      * @return list of coordinate holding tokens that need to be flipped
      */
     public ArrayList<Coordinate> flipTokens(char s, int x, int y, ArrayList<ArrayList<Character>>board) {
-        int outOfBounds = board.size() - 1;
+        int outOfBounds = board.size();
         int xStart, yStart,z = 0;
         ArrayList<Coordinate> directions = new ArrayList<Coordinate>();
         ArrayList<Coordinate> flips = new ArrayList<Coordinate>();
@@ -178,6 +181,7 @@ public class GameLogic {
                         }
                     }
                     z = 0;
+                    mayFlip.clear();
                     x = xStart;
                     y = yStart;
                 }
@@ -239,8 +243,8 @@ public class GameLogic {
     /**
      * checks if game is over
      * @param board game board.
-     * @param p1 fist player sign
-     * @param p2second player sign
+     * @param p1 first player sign
+     * @param p2 second player sign
      * @return true if either player has moves and board has free space, false otherwise.
      */
     public boolean gameOver(Board board, char p1, char p2) {

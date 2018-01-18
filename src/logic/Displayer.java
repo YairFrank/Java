@@ -1,4 +1,4 @@
-package sample;
+package logic;
 
 import java.util.ArrayList;
 
@@ -12,5 +12,5 @@ public interface Displayer {
      * @param p2Color color of second player
      * @param board game board
      */
-    public void draw(Color p1Color, Color p2Color, ArrayList<ArrayList<Character>> board);
+    public void draw(char first, Color p1Color, Color p2Color, ArrayList<ArrayList<Character>> board);
 }

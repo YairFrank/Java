@@ -1,4 +1,4 @@
-package sample;
+package javaFX;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -8,9 +8,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import sample.Board;
-import sample.GameFlow;
-import sample.Player;
+import logic.Board;
+import logic.Displayer;
+import logic.GameFlow;
+import logic.Player;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.HBox;
@@ -96,5 +97,6 @@ public class ReversiGameController implements Initializable{
             this.p2 = new Player('X',Color.WHITE);
             p2.setColor(Color.valueOf(this.settings.get(1)));
         }
+
     }
 }

@@ -1,4 +1,4 @@
-package sample;
+package logic;
 
 /**
  * @author leah

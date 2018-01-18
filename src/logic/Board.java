@@ -1,4 +1,4 @@
-package sample;
+package logic;
 
 import java.util.ArrayList;
 
@@ -36,7 +36,7 @@ public class Board {
     public Board(int size, Displayer d) {
         this.size = size;
         this.displayer = d;
-        ArrayList<Character> inner = new ArrayList<Character>(size + 1);
+        ArrayList<Character> inner = new ArrayList<Character>(size);
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 inner.add(' ');
@@ -73,7 +73,7 @@ public class Board {
      * @param j y coordinate
      */
     public void enterMove(char x, int i, int j) {
-        this.board.get(i - 1).set(j - 1, x);
+        this.board.get(i).set(j, x);
     }
 
     /**

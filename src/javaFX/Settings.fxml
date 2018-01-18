@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" prefHeight="400.0" prefWidth="400.0" style="-fx-background-color: #3D4956;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SettingsController">
+<AnchorPane fx:id="root" prefHeight="400.0" prefWidth="400.0" style="-fx-background-color: #3D4956;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaFX.SettingsController">
    <children>
       <AnchorPane prefHeight="71.0" prefWidth="600.0" style="-fx-background-color: #3D4956;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -49,7 +49,7 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Slider fx:id="slider" blockIncrement="1.0" layoutX="150.0" layoutY="273.0" majorTickUnit="16.0" max="20.0" min="4.0" minorTickCount="15" prefHeight="14.0" prefWidth="311.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="4.0" />
+      <Slider fx:id="slider" blockIncrement="1.0" layoutX="150.0" layoutY="273.0" majorTickUnit="16.0" max="20.0" min="4.0" minorTickCount="15" prefHeight="14.0" prefWidth="311.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="8.0" />
       <Button fx:id="apply" layoutX="210.0" layoutY="343.0" mnemonicParsing="false" onAction="#writeToFile" text="Apply" />
       <RadioButton layoutX="219.0" layoutY="133.0" mnemonicParsing="false" text="X" textFill="#e8e1e1" fx:id="xchoise">
          <font>
